@@ -63,7 +63,10 @@ server {
 2. 配置 Nginx 虚拟主机并重启 Nginx。
 3. 确保 `config` 和 `app` 目录的权限正确，`public` 目录对外公开。
 4. 访问配置的域名，输入 CloudFlare API Token 即可使用。
-
+5. 伪静态
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
 ## 认证说明
 
 系统支持两种认证方式：
