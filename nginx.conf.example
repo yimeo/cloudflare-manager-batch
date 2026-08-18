@@ -1,0 +1,47 @@
+server {
+    listen 80;
+    # 替换为您的域名
+    server_name cf.yourdomain.com;
+    
+    # 指向项目的 public 目录
+    root /var/www/cloudflare-manager/public;
+    index index.php index.html index.htm;
+
+    # 安全配置：禁止访问隐藏文件和目录
+    location ~ /\. {
+        deny all;
+    }
+
+    # URL 重写规则，将所有请求路由到 index.php
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP 处理
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        
+        # 请根据您的 PHP 版本和环境修改 fastcgi_pass
+        # Ubuntu/Debian 默认通常是：
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        # CentOS/RHEL 可能是：
+        # fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+        # 或者使用 TCP 端口：
+        # fastcgi_pass 127.0.0.1:9000;
+        
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        
+        # 增加超时时间，因为批量操作可能需要较长时间
+        fastcgi_read_timeout 300;
+    }
+
+    # 静态资源缓存设置
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires max;
+        log_not_found off;
+    }
+}

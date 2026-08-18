@@ -1,0 +1,19 @@
+# Runtime and local state
+/storage/*
+!/storage/.gitkeep
+.env
+.env.*
+!.env.example
+*.log
+
+# Local/editor/system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Dependencies and temporary files
+/vendor/
+/node_modules/
+*.swp
+*.tmp
