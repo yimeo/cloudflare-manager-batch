@@ -1,6 +1,6 @@
 # CloudFlare 批量管理工具
 
-基于 Nginx + PHP 开发的 CloudFlare 批量管理工具，对标 90th.cn/CloudFlare，提供全套域名批量管理功能，并额外增加了 **AI 爬虫拦截管理** 模块。
+基于 Nginx + PHP 开发的 CloudFlare 批量管理工具，提供全套域名批量管理功能，并额外增加了 **AI 爬虫拦截管理** 模块。
 
 ## 功能特性
 
